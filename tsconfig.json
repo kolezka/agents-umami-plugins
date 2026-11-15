@@ -10,7 +10,8 @@
     "strict": true,
     "skipLibCheck": true,
     "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true,
     "types": ["bun"]
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", "scripts"]
 }

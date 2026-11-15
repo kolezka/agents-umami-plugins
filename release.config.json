@@ -1,0 +1,12 @@
+{
+  "versionSource": "plugins/umami/.claude-plugin/plugin.json",
+  "versionFiles": [
+    { "path": "package.json", "key": ["version"] },
+    { "path": "plugins/umami/package.json", "key": ["version"] },
+    { "path": "plugins/umami/.claude-plugin/plugin.json", "key": ["version"] },
+    { "path": ".claude-plugin/marketplace.json", "key": ["plugins", 0, "version"] }
+  ],
+  "build": ["bun", "run", "build"],
+  "changelog": "CHANGELOG.md",
+  "tagPrefix": "v"
+}

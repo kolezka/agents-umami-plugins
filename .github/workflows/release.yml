@@ -1,0 +1,89 @@
+name: release
+
+# Run from the Actions tab: pick patch, minor or major. The job bumps every version file listed
+# in release.config.json, rebuilds the server bundle, updates CHANGELOG.md, commits, tags,
+# pushes to main and creates the GitHub release. Pull requests that touch the release tooling
+# run the same steps without publishing.
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Which part of the version to bump
+        type: choice
+        options: [patch, minor, major]
+        default: patch
+        required: true
+      dry_run:
+        description: Prepare and show the release without publishing
+        type: boolean
+        default: false
+  pull_request:
+    paths:
+      - .github/workflows/release.yml
+      - release.config.json
+      - scripts/release.ts
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      BUMP: ${{ inputs.bump || 'patch' }}
+      PUBLISH: ${{ github.event_name == 'workflow_dispatch' && !inputs.dry_run }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+
+      - run: bun install --frozen-lockfile
+
+      - name: Check before release
+        run: |
+          bun run check
+          bun run build
+          git diff --exit-code -- plugins/umami/server/umami-mcp.js
+          bun test
+
+      - name: Prepare release
+        id: prep
+        run: bun scripts/release.ts "$BUMP" --notes-out "$RUNNER_TEMP/notes.md"
+
+      - name: Test the bumped tree
+        run: bun test
+
+      - name: Show the release
+        run: |
+          git status --short
+          git diff -- CHANGELOG.md
+          cat "$RUNNER_TEMP/notes.md"
+
+      - name: Commit, tag, push and create the GitHub release
+        if: env.PUBLISH == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.prep.outputs.tag }}
+        run: |
+          gh auth setup-git
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+          git commit -m "chore(release): $TAG"
+          git tag -a "$TAG" -m "$TAG"
+          # Atomic, so main never gets a release commit without its tag or the other way round.
+          git push --atomic origin HEAD:refs/heads/main "refs/tags/$TAG"
+          gh release create "$TAG" --title "$TAG" --notes-file "$RUNNER_TEMP/notes.md" --verify-tag

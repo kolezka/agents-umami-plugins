@@ -98,6 +98,22 @@ bun run smoke    # read-only checks against the instance in your environment
 Rebuild and commit `plugins/umami/server/umami-mcp.js` with every change to `src/`. CI fails
 when the committed bundle does not match the source.
 
+## Releasing
+
+Run the `release` workflow from the Actions tab and pick `patch`, `minor` or `major`. It:
+
+1. checks types, tests and that the committed bundle matches the source,
+2. bumps the version in every file listed in `release.config.json` (both `package.json`
+   files, the plugin manifest and the marketplace entry) and rebuilds the bundle, which
+   reports the new version,
+3. adds a `CHANGELOG.md` section built from the Conventional Commits since the last tag,
+4. commits `chore(release): vX.Y.Z`, tags it, pushes both to `main` in one atomic push and
+   creates the GitHub release with that section as notes.
+
+Tick `dry_run` to see the result without publishing. Pull requests that change the release
+tooling run the same steps in dry-run mode. Locally: `bun scripts/release.ts minor` on a
+clean tree prepares the same changes without committing.
+
 ## License
 
 MIT
