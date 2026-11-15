@@ -29,6 +29,8 @@ describe('changelog', () => {
     { sha: 'ddddddd4', subject: 'docs: explain ranges', body: 'BREAKING CHANGE: no, this line is in the body' },
     { sha: 'eeeeeee5', subject: 'chore(release): v0.1.0', body: '' },
     { sha: 'fffffff6', subject: 'Merge pull request #3 from x/y', body: '' },
+    // The synthetic merge commit GitHub checks out for a pull_request run.
+    { sha: '99999997', subject: 'Merge 6488b44 into ce00d0d', body: '' },
   ]
 
   test('groups conventional commits and skips release and merge commits', () => {
@@ -38,7 +40,7 @@ describe('changelog', () => {
     expect(s).toContain('### Features\n\n- **tools:** add umami_list_events (aaaaaaa)')
     expect(s).toContain('### Fixes\n\n- redact newPassword (bbbbbbb)')
     expect(s).not.toContain('v0.1.0')
-    expect(s).not.toContain('Merge pull request')
+    expect(s).not.toContain('Merge ')
   })
 
   test('says so when nothing user-facing changed', () => {

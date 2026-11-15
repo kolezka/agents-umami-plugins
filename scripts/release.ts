@@ -60,7 +60,7 @@ const CONVENTIONAL = /^(\w+)(?:\(([^)]*)\))?(!)?:\s*(.+)$/
 
 export function renderSection(version: string, date: string, commits: Commit[]): string {
   const parsed = commits
-    .filter((c) => !/^chore\(release\)/.test(c.subject) && !/^Merge (pull request|branch)/.test(c.subject))
+    .filter((c) => !/^chore\(release\)/.test(c.subject) && !/^Merge /.test(c.subject))
     .map((c) => {
       const m = CONVENTIONAL.exec(c.subject)
       const type = m?.[1] ?? 'other'
