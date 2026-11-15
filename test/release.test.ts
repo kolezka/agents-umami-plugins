@@ -34,7 +34,7 @@ describe('changelog', () => {
   test('groups conventional commits and skips release and merge commits', () => {
     const s = renderSection('0.2.0', '2026-11-15', commits)
     expect(s).toStartWith('## [0.2.0] - 2026-11-15\n')
-    expect(s).toContain('### Breaking changes\n\n- rename tools (ccccccc)\n- explain ranges (ddddddd)')
+    expect(s).toContain('### Breaking changes\n\n- refactor: rename tools (ccccccc)\n- docs: explain ranges (ddddddd)')
     expect(s).toContain('### Features\n\n- **tools:** add umami_list_events (aaaaaaa)')
     expect(s).toContain('### Fixes\n\n- redact newPassword (bbbbbbb)')
     expect(s).not.toContain('v0.1.0')

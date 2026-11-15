@@ -67,7 +67,9 @@ export function renderSection(version: string, date: string, commits: Commit[]):
       const scope = m?.[2]
       const text = m?.[4] ?? c.subject
       const breaking = Boolean(m?.[3]) || /^BREAKING[ -]CHANGE:/m.test(c.body)
-      return { type, breaking, line: `- ${scope ? `**${scope}:** ` : ''}${text} (${c.sha.slice(0, 7)})` }
+      // Feature and fix sections already name the type; elsewhere keep it (docs, ci, refactor).
+      const kind = m && type !== 'feat' && type !== 'fix' ? `${type}: ` : ''
+      return { type, breaking, line: `- ${kind}${scope ? `**${scope}:** ` : ''}${text} (${c.sha.slice(0, 7)})` }
     })
   const lines = [`## [${version}] - ${date}`, '']
   for (const [title, match] of SECTIONS) {
