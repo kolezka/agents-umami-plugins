@@ -1,8 +1,9 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { UmamiClient } from './client.ts'
 import { registerTools } from './tools.ts'
+import pkg from '../package.json' with { type: 'json' }
 
-export const VERSION = '0.1.0'
+export const VERSION: string = pkg.version
 
 const INSTRUCTIONS = `Administer an Umami analytics instance through its REST API.
 Find ids with umami_list_websites or umami_list_teams before calling tools that need one.
