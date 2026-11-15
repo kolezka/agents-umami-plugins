@@ -1,0 +1,36 @@
+{
+  "name": "@kolezka/umami-dsh",
+  "version": "0.1.0",
+  "private": true,
+  "description": "DeepSeek Harness bundle for the umami plugin: Umami administration skill and MCP server",
+  "type": "module",
+  "exports": {
+    ".": "./dsh/index.js",
+    "./mcp": "./dsh/mcp.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    ".claude-plugin",
+    ".mcp.json",
+    "dsh",
+    "server",
+    "skills"
+  ],
+  "dependencies": {
+    "claude-plugin-dsh": "0.2.1"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-mcp-client": "*"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./dsh/cordis.patch.yml"
+    }
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kolezka/agents-umami-plugins.git",
+    "directory": "plugins/umami"
+  }
+}

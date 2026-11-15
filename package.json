@@ -1,0 +1,26 @@
+{
+  "name": "agents-umami-plugins",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Umami administration plugins for Claude Code and DeepSeek Harness",
+  "type": "module",
+  "scripts": {
+    "build": "bun build src/main.ts --target=node --format=esm --minify --outfile=plugins/umami/server/umami-mcp.js",
+    "check": "bun x tsc --noEmit",
+    "test": "bun test",
+    "smoke": "bun run build && bun test/live-smoke.ts"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kolezka/agents-umami-plugins.git"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.4",
+    "typescript": "^7.0.2"
+  }
+}

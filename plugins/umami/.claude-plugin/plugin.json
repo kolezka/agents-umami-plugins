@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "umami",
+  "version": "0.1.0",
+  "description": "Administer Umami analytics: websites, stats, teams and users through the Umami REST API.",
+  "author": {
+    "name": "kolezka",
+    "url": "https://github.com/kolezka"
+  },
+  "homepage": "https://github.com/kolezka/agents-umami-plugins",
+  "repository": "https://github.com/kolezka/agents-umami-plugins",
+  "license": "MIT",
+  "keywords": ["umami", "analytics", "mcp", "admin"]
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "agents-umami-plugins",
+  "description": "Umami analytics administration for coding agents.",
+  "owner": {
+    "name": "kolezka",
+    "url": "https://github.com/kolezka"
+  },
+  "plugins": [
+    {
+      "name": "umami",
+      "source": "./plugins/umami",
+      "description": "Administer Umami analytics: websites, stats, teams and users through the Umami REST API.",
+      "version": "0.1.0",
+      "category": "analytics",
+      "keywords": ["umami", "analytics", "mcp"]
+    }
+  ]
+}

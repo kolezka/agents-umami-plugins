@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "umami": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/server/umami-mcp.js"],
+      "env": {
+        "UMAMI_API_TOKEN": "${UMAMI_API_TOKEN:-}",
+        "UMAMI_API_URL": "${UMAMI_API_URL:-}"
+      }
+    }
+  }
+}

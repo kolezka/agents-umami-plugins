@@ -1,0 +1,8 @@
+# Skills from the Claude Code plugin tree.
+- insert:
+    - id: claude-compat-umami
+      name: '@kolezka/umami-dsh'
+# The umami MCP server. Reads UMAMI_API_TOKEN and UMAMI_API_URL from the DSH process environment.
+- insert:
+    - id: umami-mcp
+      name: '@kolezka/umami-dsh/mcp'
